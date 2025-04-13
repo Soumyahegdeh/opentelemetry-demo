@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+  labels:
+    app: opentelemetry-demo-adservice
+    sa : opentelemetry-demo
+spec:
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: opentelemetry-demo-adservice
+      sa : opentelemetry-demo
+  template:
+    metadata:
+      labels:
+        app: opentelemetry-demo-adservice
+        sa : opentelemetry-demo
+    spec:
+      serviceAccountName: opentelemetry-demo
+      containers:
+      - name: adservice
+        image: 'ghcr.io/open-telemetry/demo:1.12.0-adservice'
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        
+
